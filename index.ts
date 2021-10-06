@@ -4,6 +4,13 @@ import {sendCall, sendMessage} from "./twilio.ts"
 import {twilioConfig, zendeskConfig} from "./config/index.ts"
 import {exists} from "https://deno.land/std@0.110.0/fs/mod.ts";
 
+// Request read and write permissions for the tracked file
+const trackedFilePath = new URL('./tracked.json', import.meta.url).pathname.substring(1);
+const trackedReadDesc = { name: "read", path: trackedFilePath } as const;
+const trackedWriteDesc = { name: "write", path: trackedFilePath } as const;
+await Deno.permissions.request(trackedReadDesc);
+await Deno.permissions.request(trackedWriteDesc);
+
 // Run the task to check the tickets at a specific interval defined in the checkQueueCron value in the zendesk config
 cron(zendeskConfig.checkQueueCron, async () => {
     // Get the list of tickets in the tracked queue
