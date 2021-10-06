@@ -1,6 +1,9 @@
 import { twilioConfig } from "./config/index.ts"
 import { Base64 } from "https://deno.land/x/bb64@1.1.0/mod.ts";
 
+const twilioNetDesc = { name: "net", host: 'api.twilio.com' } as const;
+await Deno.permissions.request(twilioNetDesc);
+
 const {accountSid, authToken} = twilioConfig;
 
 /**

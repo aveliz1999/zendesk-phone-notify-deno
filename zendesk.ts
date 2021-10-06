@@ -2,6 +2,10 @@
 import { zendeskConfig } from "./config/index.ts"
 import { Base64 } from "https://deno.land/x/bb64@1.1.0/mod.ts";
 
+const zendeskHost = new URL(zendeskConfig.zendeskUrl).host;
+const zendeskNetDesc = { name: "net", host: zendeskHost } as const;
+await Deno.permissions.request(zendeskNetDesc);
+
 // Define some of the fields in the tickets that we need
 type TicketType = {
     url: string,

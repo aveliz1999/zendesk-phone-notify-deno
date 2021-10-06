@@ -20,8 +20,12 @@ export type ZendeskConfig = {
     messagesBeforeCalling: number
 }
 
-const twilioFile = new URL('./twilio.yaml', import.meta.url).pathname.substring(1)
-const zendeskFile = new URL('./zendesk.yaml', import.meta.url).pathname.substring(1)
+const configDirectory = new URL('.', import.meta.url).pathname.substring(1);
+const twilioFile = new URL('./twilio.yaml', import.meta.url).pathname.substring(1);
+const zendeskFile = new URL('./zendesk.yaml', import.meta.url).pathname.substring(1);
+
+const configReadDesc = { name: "read", path: configDirectory } as const;
+await Deno.permissions.request(configReadDesc);
 
 export const twilioConfig = parse(await Deno.readTextFile(twilioFile)) as TwilioConfig;
 export const zendeskConfig = parse(await Deno.readTextFile(zendeskFile)) as ZendeskConfig;
