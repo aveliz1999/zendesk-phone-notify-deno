@@ -1,4 +1,4 @@
-# zendesk-phone-notify
+# zendesk-phone-notify-deno
 
 Application to send text or call reminders through twilio when there are new tickets in a zendesk queue.
 
